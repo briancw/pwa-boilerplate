@@ -28,14 +28,6 @@ export default {
 
 .foo {
     color: blue;
-
-    .desktop({
-        color: #333333;
-    });
-
-    .mobile({
-        color: #330000;
-    });
 }
 
 </style>
