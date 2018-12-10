@@ -1,27 +1,111 @@
-.desktop(@content) {
-    @media screen and (min-width: 414px) {
-        @content();
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  // Use locally stored and prefetched files, fallback to google.
+  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-display: swap;
+}
+
+// lato
+// Standard usage:
+// .lato(500)[];
+// Gives an element the font face lato.
+.lato(@weight: 400) {
+    font-family: 'Lato', sans-serif;
+    font-weight: @weight;
+}
+
+.grid-breakpoints() {
+    @xs: 0;
+    @sm: 480px;
+    @md: 768px;
+    @lg: 1200px;
+    @xl: 2200px;
+};
+
+// px
+// Standard usage:
+// font-size: .px(@min-fz)[];
+// Converts the given scalar to px.
+.px(@scalar) {
+    @return: @scalar * 1px;
+}
+
+// p
+// Standard usage:
+// font-size: .p(@min-width)[];
+// Converts the given scalar to percent.
+.p(@scalar) {
+    @return: @scalar * 1%;
+}
+
+// above
+// Standard usage:
+//.above(560px; {
+//    background: red;
+// });
+// OR:
+// .above(md, {
+//    background: red;
+// });
+.above(@width; @rules) when not (isnumber(@width)) {
+    @media screen and (min-width: .grid-breakpoints[@@width]) {
+        @rules();
     }
 }
 
-.tablet(@content) {
-    @media screen and (max-width: 1028px) {
-        @content();
+.above(@width; @rules) when (isnumber(@width)) {
+    @media screen and (min-width: @width) {
+        @rules();
     }
 }
 
-.mobile(@content) {
-    @media screen and (max-width: 414px) {
-        @content();
+.below(@width; @rules) when not (isnumber(@width)) {
+    @media screen and (max-width: .grid-breakpoints[@@width] - 1px) {
+        @rules();
     }
 }
 
-// FIXME not yet working
-// .tablet_mobile(@content) {
-//     .tablet() {
-//         @content();
-//     }
-//     .mobile() {
-//         @content();
-//     }
-// }
+.below(@width; @rules) when (isnumber(@width)) {
+    @media screen and (max-width: @width) {
+        @rules();
+    }
+}
+
+// aria :focus-visible
+// Standard usage:
+// .aria-visible();
+// Use this to visually hide something that you want to be visible to screen readers.
+// Cafrefully consider if thats something you want to do.
+.aria-visible() {
+    clip-path: inset(100%);
+    clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap; /* added line */
+    width: 1px;
+}
+
+// Responsive ratio
+// Standard usage:
+// @include ratio(16; 9);
+// @include ratio(16; 9; true);
+.ratio(@x; @y; @pseudo: false) when (@pseudo = true) {
+    @padding: unit((@y / @x) * 100, %);
+    &::before {
+        content: ' ';
+        display: block;
+        position: relative;
+        width: 100%;
+        padding-top: @padding;
+    }
+}
+
+.ratio(@x; @y; @pseudo: false) when not (@pseudo = true) {
+    @padding: unit((@y / @x) * 100, %);
+    padding-top: @padding;
+}
