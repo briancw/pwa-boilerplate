@@ -11,12 +11,10 @@ const config = Object.assign({}, base, {
     target: 'node',
     // Point entry to your app's server entry file
     entry: './client/entry_server.js',
-    // TODO research why this is done this way
     // This tells the server bundle to use Node-style exports
     output: Object.assign({}, base.output, {
         libraryTarget: 'commonjs2',
     }),
-    // https://webpack.js.org/configuration/externals/#function
     // https://github.com/liady/webpack-node-externals
     // Externalize app dependencies. This makes the server build much faster and generates a smaller bundle file.
     // Do not externalize dependencies that need to be processed by webpack.

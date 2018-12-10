@@ -18,8 +18,7 @@ const config = Object.assign({}, base, {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
             'process.env.VUE_ENV': '"client"',
         }),
-        // This plugins generates `vue-ssr-client-manifest.json` in the
-        // output directory.
+        // This plugins generates `vue-ssr-client-manifest.json` in the output directory.
         new VueSSRClientPlugin(),
         new WebpackBuildNotifierPlugin({
             title: 'Webpack Client Build',
@@ -35,15 +34,14 @@ if (isProduction) {
             vendor: {
                 test: /[\\/]node_modules[\\/]/,
                 chunks: 'initial',
-                // chunks: 'all',
                 name: 'vendor',
                 enforce: true,
             },
         },
     }
 
-    // Add Compression plugins and service worker caching
     config.plugins.push(
+        // Compress all JS and CSS files with Gzip and Brotli
         new CompressionPlugin({
             algorithm: 'gzip',
             test: /\.js$|\.css$/,
@@ -56,6 +54,7 @@ if (isProduction) {
             threshold: 0,
             // minRatio: 0.8,
         }),
+        // Generate a service worker to do local caching
         // It'd be best to read options for this and cater to specific project needs
         // https://www.npmjs.com/package/sw-precache-webpack-plugin
         new SWPrecacheWebpackPlugin({
