@@ -9,7 +9,7 @@ export default (context) => {
         router.onReady(() => {
             // The router has a catchAll route which has a meta key of isFourOhFour
             // This lets the SSR renderer to know it should send a status code of 404
-            if (router.currentRoute.meta.isFourOfFour) {
+            if (router.currentRoute.meta.isFourOhFour) {
                 return reject({code: 404})
             }
 
