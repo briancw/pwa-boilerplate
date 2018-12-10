@@ -7,22 +7,22 @@ export default (context) => {
         router.push(context.url)
 
         router.onReady(() => {
-            const matchedComponents = router.getMatchedComponents()
-
-            // If the four-oh-four component was matched
-            if (matchedComponents.reduce((a, c) => a === true ? a : c.name === 'four-oh-four', false)) {
-                if (context.url !== '/404') {
-                    return reject({code: 404})
-                }
+            // The router has a catchAll route which has a meta key of isFourOhFour
+            // This lets the SSR renderer to know it should send a status code of 404
+            if (router.currentRoute.meta.isFourOfFour) {
+                return reject({code: 404})
             }
 
+            const matchedComponents = router.getMatchedComponents()
             Promise.all(matchedComponents.map(({asyncData}) => asyncData && asyncData({
                 store,
                 route: router.currentRoute,
-            }))).then(() => {
+            })))
+            .then(() => {
                 context.state = store.state
                 resolve(app)
-            }).catch(reject)
+            })
+            .catch(reject)
         }, reject)
     })
 }

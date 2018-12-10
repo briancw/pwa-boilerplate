@@ -5,80 +5,58 @@ const helmet = require('helmet')
 const expressStaticGzip = require('express-static-gzip')
 const app = express()
 const {frontendPort} = require('../config.js')
-const bodyParser = require('body-parser')
+const isDevelopment = (process.env.NODE_ENV === 'development')
 
 // Apply some useful plugins like helmet (security) and bodyParser (post param decoding)
 app.use(helmet())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
 
-// Service workers should be loaded from / instead of a directory like /dist/
+// The caching service worker must be loaded from / to be allowed to cache everything necessary
 app.use('/service-worker.js', express.static(path.resolve(__dirname, '../dist/service-worker.js')))
 
+// Serve any static files in public
 app.use('/', expressStaticGzip(path.resolve(__dirname, '../', 'public'), {
     enableBrotli: true,
     indexFromEmptyFile: false,
 }))
 
+// Serve compiled resources
 app.use('/dist/', expressStaticGzip(path.resolve(__dirname, '../', 'dist'), {
     enableBrotli: true,
     indexFromEmptyFile: false,
 }))
 
-// If in development, load resources from HMR server
-if (process.env.NODE_ENV === 'development') {
-    console.log('Running in development mode!')
-    let render
+/**
+ * @function getRenderer
+ * @return {function} An instance of the Vue SSR Renderer
+ */
+function getRenderer() {
+    if (isDevelopment) {
+        require('./hmr.js')(app, (serverBundle, clientManifest, template) => {
+            return require('./ssr_renderer.js')(clientManifest, serverBundle, template)
+        })
+    }
 
-    require('./hmr.js')(app, (serverBundle, clientManifest, template) => {
-        render = require('./ssr_renderer.js')(clientManifest, serverBundle, template)
-    })
-
-    // TODO move default meta somewhere
-    // TODO comment on why default meta exists
-    app.get('*', (req, res) => {
-        if (render) {
-            const context = {
-                url: req.url,
-                meta: {
-                    title: 'Default Title',
-                },
-                fullUrl: 'https://' + req.get('host') + req.originalUrl,
-            }
-
-            render(req, res, context)
-        } else {
-            res.send('Compiling, reload in a moment.')
-        }
-    })
-
-} else {
-    // If in production, load the client and server files to be served
-    console.log('Server is running in production mode')
-
-    const clientManifest = require('../dist/vue-ssr-client-manifest.json')
-    const serverBundlePath = '../dist/vue-ssr-server-bundle.json'
-    const template = fs.readFileSync(path.resolve('./dist/index.html'), 'utf8')
-    let serverBundle = require(serverBundlePath)
-    // A few wrappers that set headers and set up streaming hooks.
-    let render = require('./ssr_renderer.js')(clientManifest, serverBundle, template)
-
-    app.get('*', (req, res) => {
-        const context = {
-            url: req.url,
-            meta: {
-                title: 'Default Title',
-            },
-            fullUrl: 'https://' + req.get('host') + req.originalUrl,
-        }
-
-        render(req, res, context)
-    })
+    let clientManifest = JSON.parse(fs.readFileSync('./dist/vue-ssr-client-manifest.json', 'utf8'))
+    let serverBundle = JSON.parse(fs.readFileSync('./dist/vue-ssr-server-bundle.json', 'utf8'))
+    let template = fs.readFileSync(path.resolve('./dist/index.html'), 'utf8')
+    return require('./ssr_renderer.js')(clientManifest, serverBundle, template)
 }
+
+const render = getRenderer()
+
+app.get('*', (req, res) => {
+    const context = {
+        url: req.url,
+        fullUrl: 'https://' + req.get('host') + req.originalUrl,
+    }
+
+    render(req, res, context)
+})
 
 app.listen(frontendPort, (err) => {
     if (err) {
         throw err
     }
+    console.log(`Running in ${process.env.NODE_ENV} mode`)
     console.log(`Listening on port ${frontendPort}`)
 })

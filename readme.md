@@ -1,26 +1,23 @@
-For local dev run ```npm run dev```
+## Gettings started
+Run eject.sh to start a fresh git history for your own project.
+Run ```npm run dev``` to start webpacking and serving to localhost:3005
 
-## Things to do
+## Npm Scripts
+ - dev: Starts webpacking of the client and server, and starts serving the content on port 3005
+ - production: Starts the server in production mode (Don't forget to pack first)
+ - pack-production: Runs webpack in production mode for the client and server
+ - pack-client-production: Production mode packs the client only
+ - pack-server-production: Production mode packs the server only
+ - clean: deletes files in the dist directory
+
+## HTTPS/HTTP2
+The application serves up only http and expects you to use a reverse proxy for TLS.
+For local testing of Http2 there is an included docker compose file and and HAProxy config.
+For deployment, using HAProxy via the included config is also reccomended.
+
+## Things to edit for your own project
 Customize config.js
 Customize public/manifest.json
 Add icons
-Change the CacheId for SW in webpack.client.config.js
-Customize robots.txt
-
-## Real Cert method
-Generate a real ssl cert from Lets Encrypt by using a domain you control and only want to use for local dev like "local.example.org"
-Use those certs
-
-## Local Certs Method (I couldn't make this work)
-Generate an SSL cert with the following
-```
-openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
-openssl rsa -passin pass:x -in server.pass.key -out server.key
-rm server.pass.key
-openssl req -new -key server.key -out server.csr
-openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
-```
-
-Add the server.crt to your system (on a mac this is via the Keychain Access app)
-If using chrome, you'll want to allow insecure localhost. Paste this into the URL bar: ```chrome://flags/#allow-insecure-localhost```
-If using Firefox, you'll also need to add a server exception under Preferences > Security > View Certificates > Servers > Add Exception
+Author in index.template.html
+theme color in index.template.html

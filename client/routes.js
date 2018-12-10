@@ -13,7 +13,7 @@ const routes = [
         {path: '/404', component: fourOhFour},
     ]},
     {path: '/', component: defaultLayout, children: [
-        {path: '*', component: fourOhFour},
+        {path: '*', component: fourOhFour, meta: {isFourOfFour: true}},
     ]},
 ]
 

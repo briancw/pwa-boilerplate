@@ -57,7 +57,6 @@ if (isProduction) {
         // It'd be best to read options for this and cater to specific project needs
         // https://www.npmjs.com/package/sw-precache-webpack-plugin
         new SWPrecacheWebpackPlugin({
-            cacheId: 'CHANGEME-app',
             filename: 'service-worker.js',
             // staticFileGlobs: ['dist/**/*.{js,html,css}'],
             // minify: true,
