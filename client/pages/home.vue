@@ -16,7 +16,7 @@ export default {
     meta() {
         return {
             title: 'My Site Name | A nice tagline for this site',
-            useWholeTitle: true,
+            useTitleOnly: true,
             description: 'A nice breif site description',
         }
     },

@@ -4,21 +4,31 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{meta.title}}</title>
-        
         {{{meta.description}}}
-        <meta property="og:title" content="{{meta.title}}">
-        {{{meta.ogDescription}}}
-        <!-- <meta property="og:image" content="{{meta.card}}"> -->
-        <meta property="og:url" content="{{ fullUrl }}">
-        <meta name="twitter:card" content="summary_large_image">
-        {{{meta.robots}}}
-
         <meta name="author" content="">
-        <link rel="shortcut icon" href="/icons/favicon.ico" id="favicon">
+
+        {{{meta.robots}}}
         <link rel="manifest" href="/manifest.json">
         <meta name="theme-color" content="#4e4e4e" id="theme_color">
         <meta name="msapplication-TileColor" content="#ffc40d">
         <meta name="msapplication-TileImage" content="/icons/w_168.png">
+        <link rel="shortcut icon" type="image/png" sizes="32x32" href="/icons/favicon.ico?v=0">
+        <link rel="shortcut icon" type="image/png" sizes="16x16" href="/icons/favicon.ico?v=0">
+        <!-- <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png?v=0"> -->
+        <!-- <link rel="mask-icon" href="/icons/safari-pinned-tab.svg?v=0" color="##D01420"> -->
+
+        <meta property="og:title" content="{{meta.title}}">
+        {{{meta.ogDescription}}}
+        {{meta.ogImage}}
+        <meta property="og:url" content="{{ fullUrl }}">
+
+        {{{meta.twitterDescription}}}
+        {{{meta.twitterImage}}}
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- If used this should be a username -->
+        <!-- <meta name="twitter:site" content=""> -->
+        <meta name="twitter:creator" content="">
+        <meta name="twitter:title" content="{{meta.title}}">
 
         {{{ renderStyles() }}}
     </head>
@@ -28,4 +38,11 @@
         {{{ renderState() }}}
         {{{ renderScripts() }}}
     </body>
+
+<!-- Preloading technique -->
+<!-- https://ashton.codes/preload-google-fonts-using-resource-hints/ -->
+<!-- A service to get files for any google font -->
+<!-- https://google-webfonts-helper.herokuapp.com/fonts/rubik?subsets=latin -->
+<link rel="preload" href="/fonts/lato-v14-latin-regular.woff2" as="font">
+<link rel="preload" href="/fonts/lato-v14-latin-regular.woff" as="font">
 </html>
