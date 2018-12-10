@@ -25,24 +25,26 @@ app.use('/dist/', expressStaticGzip(path.resolve(__dirname, '../', 'dist'), {
     indexFromEmptyFile: false,
 }))
 
+let render
+
 /**
  * @function getRenderer
  * @return {function} An instance of the Vue SSR Renderer
  */
-function getRenderer() {
-    if (isDevelopment) {
-        require('./hmr.js')(app, (serverBundle, clientManifest, template) => {
-            return require('./ssr_renderer.js')(clientManifest, serverBundle, template)
-        })
-    }
-
-    let clientManifest = JSON.parse(fs.readFileSync('./dist/vue-ssr-client-manifest.json', 'utf8'))
-    let serverBundle = JSON.parse(fs.readFileSync('./dist/vue-ssr-server-bundle.json', 'utf8'))
-    let template = fs.readFileSync(path.resolve('./dist/index.html'), 'utf8')
-    return require('./ssr_renderer.js')(clientManifest, serverBundle, template)
+if (isDevelopment) {
+    // Set default render in case there is a request before inital pack.
+    render = (req, res) => res.send('Compiling, reload in a moment.')
+    // Add hot middleware and create a new render function each time both client and server have finished packing.
+    require('./hmr.js')(app, (serverBundle, clientManifest, template) => {
+        render = require('./ssr_renderer.js')(clientManifest, serverBundle, template)
+    })
+// If in production, load the client and server files to be served.
+} else {
+    const template = fs.readFileSync(path.resolve('./dist/index.html'), 'utf8')
+    const serverBundle = JSON.parse(fs.readFileSync('./dist/vue-ssr-server-bundle.json', 'utf8'))
+    const clientManifest = JSON.parse(fs.readFileSync('./dist/vue-ssr-client-manifest.json', 'utf8'))
+    render = require('./ssr_renderer.js')(clientManifest, serverBundle, template)
 }
-
-const render = getRenderer()
 
 app.get('*', (req, res) => {
     const context = {
