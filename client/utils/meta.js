@@ -35,12 +35,10 @@ export default (siteName) => {
                     if (componentMeta.description) {
                         this.$ssrContext.meta.description = `<meta name="description" content="${componentMeta.description}">`
                         this.$ssrContext.meta.ogDescription = `<meta property="og:description" content="${componentMeta.description}">`
-                        this.$ssrContext.meta.twitterDescription = `<meta name="twitter:description" content="${componentMeta.description}">`
                     }
 
                     if (componentMeta.image) {
                         this.$ssrContext.meta.ogImage = `<meta property="og:image" content="${componentMeta.image}">`
-                        this.$ssrContext.meta.twitterImage = `<meta property="twitter:image" content="${componentMeta.image}">`
                     }
 
                     if (componentMeta.noIndex) {
