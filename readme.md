@@ -19,5 +19,4 @@ For deployment, using HAProxy via the included config is also reccomended.<br>
 Customize config.js<br>
 Customize public/manifest.json<br>
 Add icons<br>
-Author in index.template.html<br>
-theme color in index.template.html<br>
+Author, colors, twitter names in index.template.html<br>
