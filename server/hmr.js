@@ -27,7 +27,7 @@ module.exports = function(app, cb) {
         },
     })
 
-    // hot middleware
+    // Hot middleware
     app.use(require('webpack-hot-middleware')(clientCompiler))
     app.use(devMiddleware)
 

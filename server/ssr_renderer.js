@@ -27,9 +27,11 @@ const ssrRenderer = function(clientManifest, serverBundle, template) {
         let stream = renderer.renderToStream(context)
         stream.on('error', (err) => {
             if (err.code === 404) {
+                // Things failed. Recursively re-render 404.
                 res.statusCode = 404
                 render(req, res, {url: '/404', fullUrl})
             } else {
+                // TODO: shouldn't this be a 500.
                 console.error(err)
                 res.send('Unknown error rendering content')
             }

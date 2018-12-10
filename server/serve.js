@@ -60,6 +60,7 @@ if (process.env.NODE_ENV === 'development') {
     const serverBundlePath = '../dist/vue-ssr-server-bundle.json'
     const template = fs.readFileSync(path.resolve('./dist/index.html'), 'utf8')
     let serverBundle = require(serverBundlePath)
+    // A few wrappers that set headers and set up streaming hooks.
     let render = require('./ssr_renderer.js')(clientManifest, serverBundle, template)
 
     app.get('*', (req, res) => {
