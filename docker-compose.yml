@@ -3,19 +3,10 @@ services:
     haproxy:
         image: haproxy
         container_name: haproxy-proxy
-        network_mode: "host" # Required when running on Linux hosts.
+        # network_mode: "host" # Only use when running on Linux!
         ports:
             - 443:443
             - 80:80
         volumes:
             - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
             - ./certs:/etc/ssl/
-        # links:
-        #     - node:node
-    # node:
-    #     image: node:alpine
-    #     container_name: node
-    #     working_dir: /home/node/app
-    #     volumes:
-    #         - ./:/home/node/app
-    #     command: "npm run production"

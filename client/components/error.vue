@@ -45,13 +45,6 @@ export default {
     z-index: 200;
     overflow: hidden;
 
-    // .error_icon {
-    //     background-image: url('/img/error_icon.png');
-    //     width: 48px;
-    //     height: 48px;
-    //     margin: 0px auto;
-    // }
-
     .error_title {
         color: #f65655;
         font-size: 24px;

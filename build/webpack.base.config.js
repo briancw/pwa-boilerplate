@@ -34,7 +34,7 @@ let config = {
                     'vue-style-loader',
                     {
                         loader: 'css-loader',
-                        options: {minimize: isProduction, sourceMap: !isProduction},
+                        options: {sourceMap: !isProduction},
                     },
                     {
                         loader: 'postcss-loader',
