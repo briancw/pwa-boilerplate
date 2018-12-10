@@ -8,6 +8,8 @@
 - [ ] Auto generate sitemap
 - [ ] Add fancy resolve helpers to webpack config
 - [ ] Chrome seems to be getting Gzip instead of BR files
+- [ ] Add placeholder favicon
+- [ ] Find a better css reset
 
 Css extraction currently isn't available. Follow these threads for updates:
 https://github.com/webpack-contrib/mini-css-extract-plugin/issues/90
