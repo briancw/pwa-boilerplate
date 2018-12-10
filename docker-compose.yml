@@ -3,6 +3,7 @@ services:
     haproxy:
         image: haproxy
         container_name: haproxy-proxy
+        network_mode: "host" # Required when running on Linux hosts.
         ports:
             - 443:443
             - 80:80
