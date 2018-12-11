@@ -17,6 +17,7 @@
 - [ ] Compress more assets in public like fonts and icons
 - [ ] Strip all GZip compression and go to all brotli
 
+# Watch
 Css extraction currently isn't available. Follow these threads for updates:
 https://github.com/webpack-contrib/mini-css-extract-plugin/issues/90
 https://github.com/webpack-contrib/mini-css-extract-plugin/issues/173

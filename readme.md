@@ -20,3 +20,6 @@ Customize config.js<br>
 Customize public/manifest.json<br>
 Add icons<br>
 Author, colors, twitter names in index.template.html<br>
+
+## Notes
+*Be cautious* about copying page meta when creating new pages, your `rel="canonical"` is in there.
