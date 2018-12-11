@@ -39,6 +39,19 @@ export default (siteName) => {
 
                     if (componentMeta.image) {
                         this.$ssrContext.meta.ogImage = `<meta property="og:image" content="${componentMeta.image}">`
+                        this.$ssrContext.meta.twitterImage = `<meta property="twitter:image" content="${componentMeta.image}">`
+
+                        if (componentMeta.imageAlt) {
+                            this.$ssrContext.meta.twitterImageAlt = `<meta property="twitter:image:alt" content="${componentMeta.imageAlt}">`
+                        }
+
+                        if (componentMeta.imageWidth && componentMeta.imageHeight) {
+                            this.$ssrContext.meta.ogImageSize = `<meta property="og:image:width" content="${componentMeta.imageWidth}">\n<meta property="og:image:height" content="${componentMeta.imageHeight}">`
+                        }
+                    }
+
+                    if (componentMeta.relCanonical && componentMeta.relCanonical.length > 3) {
+                        this.$ssrContext.meta.relCanonical = `<link rel="canonical" href="${componentMeta.relCanonical}" />`
                     }
 
                     if (componentMeta.noIndex) {

@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{meta.title}}</title>
-
-        <meta name="author" content="">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{meta.title}}</title>
         {{{meta.description}}}
+        <meta name="author" content="">
+
         {{{meta.robots}}}
+
+        {{{meta.relCanonical}}}
+
+        <meta property="og:title" content="{{meta.title}}">
+        {{{meta.ogDescription}}}
+        {{{meta.ogImage}}}
+        {{{meta.ogImageSize}}}
+        <meta property="og:url" content="{{ fullUrl }}">
+        <meta property="og:type" content="website" />
+
+        {{{meta.twitterImage}}}
+        {{{meta.twitterImageAlt}}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:creator" content="">
+
         <meta name="theme-color" content="#4e4e4e" id="theme_color">
         <meta name="msapplication-TileColor" content="#ffc40d">
         <meta name="msapplication-TileImage" content="/icons/favicon.ico">
-        <meta property="og:title" content="{{meta.title}}">
-        {{{meta.ogImage}}}
-        <meta property="og:url" content="{{fullUrl}}">
-        {{{meta.twitterImage}}}
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:creator" content="">
 
         <link rel="manifest" href="/manifest.json">
         <link rel="shortcut icon" type="image/png" sizes="32x32" href="/icons/favicon.ico?v=0">
         <link rel="shortcut icon" type="image/png" sizes="16x16" href="/icons/favicon.ico?v=0">
         <!-- <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png?v=0"> -->
         <!-- <link rel="mask-icon" href="/icons/safari-pinned-tab.svg?v=0" color="##D01420"> -->
-        <link rel="preload" href="/fonts/lato-v14-latin-regular.woff2" as="font">
-        <link rel="preload" href="/fonts/lato-v14-latin-regular.woff" as="font">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+        <link rel="preload" href="https://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wXiWtFCc.woff2" as="font" type="font/woff2" crossorigin>
 
         {{{renderStyles()}}}
     </head>

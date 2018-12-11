@@ -18,6 +18,11 @@ export default {
             title: 'My Site Name | A nice tagline for this site',
             useTitleOnly: true,
             description: 'A nice breif site description',
+            image: 'Image url',
+            imageWidth: '1200', // Evidently optimal size for facebook, twitter, and linkedin
+            imageHeight: '628',
+            imageAlt: 'Alt text.',
+            //relCanonical: 'An option to be cautious about',
         }
     },
 }
