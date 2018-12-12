@@ -8,6 +8,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 
 const isProduction = process.env.NODE_ENV === 'production'
+const {siteName} = require('../config.js')
 
 const config = Object.assign({}, base, {
     entry: {
@@ -58,10 +59,9 @@ if (isProduction) {
         // It'd be best to read options for this and cater to specific project needs
         // https://www.npmjs.com/package/sw-precache-webpack-plugin
         new SWPrecacheWebpackPlugin({
+            cacheId: `sw-cache-${siteName}`,
             filename: 'service-worker.js',
             // staticFileGlobs: ['dist/**/*.{js,html,css}'],
-            // minify: true,
-            // stripPrefix: 'dist/',
             runtimeCaching: [{
                 urlPattern: '/*',
                 handler: 'networkFirst',
