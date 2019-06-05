@@ -22,7 +22,7 @@ export default {
             imageWidth: '1200', // Evidently optimal size for facebook, twitter, and linkedin
             imageHeight: '628',
             imageAlt: 'Alt text.',
-            //relCanonical: 'An option to be cautious about',
+            // relCanonical: 'An option to be cautious about',
         }
     },
 }

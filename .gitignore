@@ -1,5 +1,11 @@
+# Dependiencies
 node_modules
+
+# Built code
 dist
 stats.html
+
+# Secrets
 certs/
 certsbackup/
+keys.js

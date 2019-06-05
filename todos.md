@@ -16,6 +16,7 @@
 - [ ] Find a better css reset
 - [ ] Compress more assets in public like fonts and icons
 - [ ] Strip all GZip compression and go to all brotli
+- [ ] Service worker cache busting
 
 # Watch
 Css extraction currently isn't available. Follow these threads for updates:

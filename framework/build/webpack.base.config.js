@@ -57,7 +57,6 @@ let config = {
             inject: false,
         }),
     ],
-    optimization: {},
 }
 
 if (isProduction) {

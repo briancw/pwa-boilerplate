@@ -2,7 +2,6 @@ const base = require('./webpack.base.config.js')
 
 const webpack = require('webpack')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
 const BrotliPlugin = require('brotli-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
@@ -43,12 +42,6 @@ if (isProduction) {
 
     config.plugins.push(
         // Compress all JS and CSS files with Gzip and Brotli
-        new CompressionPlugin({
-            algorithm: 'gzip',
-            test: /\.js$|\.css$/,
-            threshold: 0,
-            minRatio: 0.8,
-        }),
         new BrotliPlugin({
             asset: '[path].br[query]',
             test: /\.js$|\.css$/,
@@ -56,7 +49,7 @@ if (isProduction) {
             // minRatio: 0.8,
         }),
         // Generate a service worker to do local caching
-        // It'd be best to read options for this and cater to specific project needs
+        // Some options here, particularly the runtimeCaching handler, you will want to customize for your project needs
         // https://www.npmjs.com/package/sw-precache-webpack-plugin
         new SWPrecacheWebpackPlugin({
             cacheId: `sw-cache-${siteName}`,
