@@ -1,18 +1,17 @@
-const presets = [
-    [
-        '@babel/preset-env',
-        {
-            targets: {
-                browsers: ['last 2 versions'],
+module.exports = {
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                useBuiltIns: 'usage',
+                corejs: 3,
+                modules: false,
             },
-            useBuiltIns: 'usage',
-            // modules: false,
-        },
+        ],
     ],
-]
-
-const plugins = [
-    '@babel/plugin-syntax-dynamic-import',
-]
-
-module.exports = {presets, plugins}
+    sourceType: 'unambiguous',
+    ignore: [/[/\\]core-js/, /@babel[/\\]runtime/],
+    plugins: [
+        '@babel/plugin-syntax-dynamic-import',
+    ],
+}

@@ -3,7 +3,6 @@ const path = require('path')
 // Core Deps required for packing
 const HTMLPlugin = require('html-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
-const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 // Dev tools
 const Visualizer = require('webpack-visualizer-plugin')
@@ -38,11 +37,6 @@ let config = {
                     },
                     {
                         loader: 'postcss-loader',
-                        options: {
-                            plugins: () => [require('autoprefixer')({
-                                browsers: ['> 1%', 'last 2 versions'],
-                            })],
-                        },
                     },
                     'less-loader',
                 ],
@@ -63,12 +57,9 @@ let config = {
 if (isProduction) {
     config.plugins.push(
         new Visualizer({filename: '../stats.html'}),
-        new MinifyPlugin(),
     )
 } else {
     config.devtool = 'cheap-module-eval-source-map'
-    // config.devtool = 'cheap-eval-source-map'
-    // config.devtool = 'eval'
 }
 
 module.exports = config
