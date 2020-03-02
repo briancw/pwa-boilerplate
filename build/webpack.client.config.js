@@ -3,7 +3,6 @@ const base = require('./webpack.base.config.js')
 const webpack = require('webpack')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
-const BrotliPlugin = require('brotli-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 
@@ -42,18 +41,13 @@ if (isProduction) {
     }
 
     config.plugins.push(
-        // Compress all JS and CSS files with Gzip and Brotli
+        // Compress all JS and CSS files with Brotli
+        // NOTE: Gzip might also be a good idea for certain applications, but Brotli has good enough support I'm not including Gzip here.
         new CompressionPlugin({
-            algorithm: 'gzip',
-            test: /\.js$|\.css$/,
-            threshold: 0,
-            minRatio: 0.8,
-        }),
-        new BrotliPlugin({
-            asset: '[path].br[query]',
-            test: /\.js$|\.css$/,
-            threshold: 0,
-            // minRatio: 0.8,
+            filename: '[path].br[query]',
+            test: /\.(js|css)$/,
+            algorithm: 'brotliCompress',
+            compressionOptions: {level: 11},
         }),
         // Generate a service worker to do local caching
         // It'd be best to read options for this and cater to specific project needs

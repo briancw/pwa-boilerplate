@@ -1,5 +1,5 @@
+const zlib = require('zlib')
 const {createBundleRenderer} = require('vue-server-renderer')
-const compressStream = require('iltorb').compressStream
 const accepts = require('accepts')
 
 const createRenderer = (serverBundle, clientManifest, template) => {
@@ -36,7 +36,7 @@ const ssrRenderer = function(clientManifest, serverBundle, template) {
 
         if (doCompress) {
             res.setHeader('Content-Encoding', 'br')
-            stream.pipe(compressStream()).pipe(res)
+            stream.pipe(zlib.createBrotliCompress()).pipe(res)
         } else {
             stream.pipe(res)
         }
