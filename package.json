@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "NODE_ENV=development node server/serve.js",
         "production": "NODE_ENV=production node server/serve.js",
-        "pack-production": "run-p pack-client-production pack-server-production",
+        "pack-production": "run-p clean pack-client-production pack-server-production",
         "pack-client-production": "NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules",
         "pack-server-production": "NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
         "clean": "rimraf dist/*"
